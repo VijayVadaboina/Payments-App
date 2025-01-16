@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   username: {
-    type: string,
+    type: String,
     required: true,
     unique: true,
     trim: true,
@@ -11,38 +11,37 @@ const userSchema = new mongoose.Schema({
     maxLength: 50,
   },
   password: {
-    type: string,
+    type: String,
     required: true,
     minLength: 3,
   },
   firstname: {
-    type: string,
+    type: String,
     required: true,
     maxLength: 50,
     trim: true,
   },
   lastname: {
-    type: string,
+    type: String,
     required: true,
     trim: true,
     maxLength: 50,
   },
 });
-
-const accountSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.objectId,
-    ref: User,
-    required: true,
-  },
-  balance: {
-    type: number,
-    required: true,
-  },
-});
-
 const User = new mongoose.model("User", userSchema);
-const Account = new mongoose.model("Account", accountSchema);
+// const accountSchema = new mongoose.Schema({
+//   userId: {
+//     type: mongoose.Schema.Types.objectId,
+//     ref: "User",
+//     required: true,
+//   },
+//   balance: {
+//     type: Number,
+//     required: true,
+//   },
+// });
+
+// const Account = new mongoose.model("Account", accountSchema);
 
 module.exports = {
   User: User,
