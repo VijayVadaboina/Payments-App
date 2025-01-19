@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { type } = require("os");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -8,18 +9,19 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     minLength: 3,
-    maxLength: 50,
+    maxLength: 30,
   },
+
   password: {
     type: String,
     required: true,
-    minLength: 3,
+    minLength: 6,
   },
   firstname: {
     type: String,
     required: true,
-    maxLength: 50,
     trim: true,
+    maxLength: 50,
   },
   lastname: {
     type: String,
@@ -28,21 +30,25 @@ const userSchema = new mongoose.Schema({
     maxLength: 50,
   },
 });
-const User = new mongoose.model("User", userSchema);
-// const accountSchema = new mongoose.Schema({
-//   userId: {
-//     type: mongoose.Schema.Types.objectId,
-//     ref: "User",
-//     required: true,
-//   },
-//   balance: {
-//     type: Number,
-//     required: true,
-//   },
-// });
 
-// const Account = new mongoose.model("Account", accountSchema);
+const User = mongoose.model("User", userSchema);
 
-module.exports = {
-  User: User,
-};
+const accountSchema = new mongoose.Schema({
+  accountNumber: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  balance: {
+    type: Number,
+    default: 0,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User,
+    required: true,
+  },
+});
+
+const Account = mongoose.model("Account", accountSchema);
+module.exports = { User, Account };
